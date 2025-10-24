@@ -42,9 +42,27 @@ console.log(compoundInterest(1000, 0.10, 5));
    number. For numbers which are multiples of both three and five, the array 
    should contain "FizzBuzz" instead of the number.
    The returned array should be empty for arguments less than 1. */
-function fizzBuzz(num) {
 
+function fizzBuzz(num) {
+  const result = [];
+  if (num < 1) {
+    return result;
+  } 
+  for (let i = 1; i < num; i++) {
+    if (i % 3 === 0 && i % 5 === 0) {
+      result.push("FizzBuzz");
+    } else if (i % 3 === 0) {
+      result.push("Fizz");
+    } else if (i % 5 === 0) {
+      result.push("Buzz");
+    } else {
+      result.push(i);
+    }
+  }
+  return result;
 }
+
+console.log(fizzBuzz(8));
    
 
 /* Define a function `getLetterFrequencies()` that takes in a single string as 
@@ -56,7 +74,20 @@ function fizzBuzz(num) {
    each letter, increase the value associated with that key by one. Watch out 
    for if the letter is not in the Object yet!
    You can test this method with a word like "Mississippi". */
+function getLetterFrequencies(word) {
+  const result = {};
+  for (let i = 0; i < word.length; i++) {
+    const letter = word[i];
+    if (result[letter]) {
+      result[letter] += 1;
+    } else {
+      result[letter] = 1;
+    }
+  }
+  return result;
+}
 
+console.log(getLetterFrequencies("Mississippi"));
    
 
 /* Create a variable `deck` that represents a deck of modern playing cards
@@ -71,6 +102,16 @@ function fizzBuzz(num) {
     
     You can log out the `deck` to check your work! */
 
+    const deck = [];
+    const suits = ["hearts", "diamonds", "clubs", "spades"];
+    for (let i = 0; i < suits.length; i++) {
+      for (let rank = 2; rank <= 14; rank++) {
+        deck.push({suit: suits[i], rank: rank});
+      }
+    }
+
+    console.log(deck);
+
     
 
 //You can test the below functions by creating e.g., a `pokerHand` array that 
@@ -80,6 +121,17 @@ function fizzBuzz(num) {
    objects (e.g., a Poker hand) and returns whether or not the Queen of Hearts
    is in that array.
    Hint: use a loop to check each card. */
+function containsQueenOfHearts(cards) {
+  for (let i = 0; i < cards.length; i++) {
+    if (cards[i].suit === "hearts" && cards[i].rank === 12) {
+      return true;
+    }
+  }
+  return false;
+}
+
+console.log(containsQueenOfHearts([{suit: "hearts", rank: 12}]));
+console.log(containsQueenOfHearts([{suit: "hearts", rank: 13}]));
 
    
 
@@ -87,12 +139,27 @@ function fizzBuzz(num) {
   and returns the card object with the highest value. The "high card" is the one
   with the highest rank. Cards of different suits but the same rank are 
   considered to have the same value, and either is a valid result */
-
+function getHighCard(cards) {
+  let max = {suit:"", rank:0};
+  for (let i = 0; i < cards.length; i++) {
+    if (cards[i].rank > max.rank) {
+      max = cards[i];
+    }
+  }
+  return max;
+}
   
 
 /* Define a function `isFlush()` that takes in an array of "card" objects and
    returns whether or not the cards all have the same _suit_. */
-
+function isFlush(cards) {
+  for (let i = 0; i < cards.length - 1; i++) {
+    if (cards[i].suit != cards[i + 1].suit) {
+      return false;
+    }
+  }
+  return true;
+}
    
 
 /* Extra challenge: define a function `hasPair()` that takes in an array of 
