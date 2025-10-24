@@ -2,17 +2,20 @@
 
 /* Define a function `addFour()` that takes a single argument 
    and returns a value 4 greater than the input.*/
-
+function addFour(num) {
+  return num + 4;
+}
    
 /* Create and log a variable `twelve` that is the result of passing 8 to your
    addFour() function. */
-
+const twelve = addFour(8);
+console.log(twelve);
    
 /* Create and log a variable `twelveString` that is the result of passing "8" 
    (a string) to your addFour() function. Consider what this tells you about how
   the function should be explained (e.g., in a comment). */
-
-  
+const twelveString = addFour("8");
+console.log(twelveString);
 
 /* Define a function `compoundInterest()` that takes three parameters: 
      1. an initial bank balance (principle, in dollars)
@@ -25,7 +28,11 @@
    You can call the method and log the result to check your work. Compare to
      http://www.mathwarehouse.com/calculators/continuous-compound-interest-calculator.php
 */
+function compoundInterest(principle, rate, years) {
+  return (principle * Math.exp(rate * years));
+}
 
+console.log(compoundInterest(1000, 0.10, 5));
 
 
 /* Define a function `fizzBuzz()` that takes in a single number as an argument.
@@ -35,7 +42,9 @@
    number. For numbers which are multiples of both three and five, the array 
    should contain "FizzBuzz" instead of the number.
    The returned array should be empty for arguments less than 1. */
+function fizzBuzz(num) {
 
+}
    
 
 /* Define a function `getLetterFrequencies()` that takes in a single string as 
