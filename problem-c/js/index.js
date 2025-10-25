@@ -82,18 +82,42 @@ console.log(losses.map(extractOpponent));
 //line, in the following format:
 //    "Rutgers at UW, 13 to 48"
 //You should use an anonymous callback function.
-
+losses.forEach(function(game) {
+  const opp = extractOpponent(game);
+  let uwScore = 0;
+  let oppScore = 0;
+  if (game.home === "UW") {
+    uwScore = game.home_score;
+    oppScore = game.opponent_score;
+  } else {
+    uwScore = game.opponent_score;
+    oppScore = game.home_score;
+  }
+  
+  console.log(opp + " at UW, " + oppScore + " to " + uwScore);
+});
 
 //Use the `filter()` method with an anonymous callback function to get an array
 //of games where UW had at least one fumble.
 //Log out HOW MANY games included fumbles.
-
+const fumbleGames = huskyGames2016.filter(function(game) {
+  return game.fumbles >=1;
+});
+console.log(fumbleGames.length);
 
 //Define a function `mostYardsPassing()` that takes in two "game" objects and
 //returns the game that has a greater number of passing yards.
 //Your function should handle the case where the _first_ game has no 
 //`passing_yards` property, in which case it should return the second game.
-
+function mostYardsPassing(game1, game2) {
+  if (typeof game1.passing_yards === "undefined") {
+    return game2;
+  } else if (game1.passing_yards > game2.passing_yards) {
+    return game1;
+  } else if (game1.passing_yards < game2.passing_yards) {
+    return game2;
+  }
+}
 
 //Create a variable `mostPassingGame` that refers to the "game" that had the most
 //passing yards in the season. Use the `reduce()` method with `mostYardsPassing()`
@@ -103,8 +127,8 @@ console.log(losses.map(extractOpponent));
 // - Consider: why do this with `reduce()` instead of `filter()`?
 //
 //Log out the game with the most passing yards.
-
-
+const mostPassingGame = huskyGames2016.reduce(mostYardsPassing, {});
+console.log(mostPassingGame);
 
 //It would be useful to be able to apply multiple "filter criteria" to an array
 //of games at once.
@@ -114,7 +138,11 @@ console.log(losses.map(extractOpponent));
 //game object and returns the result of passing that object to both of the 
 //callback functions and "anding" (&&) the results. The `makeCombinedFilter()` 
 //function should then return this new function.
-
+function makeCombinedFilter(f1, f2) {
+  return function(game) {
+    return f1(game) && f2(game);
+  };
+}
 
 //Create a variable `fumbledAndLostFilter` which is the result of calling the 
 //`makeCombinedFilter()` function and passing two callback functions: 
@@ -122,12 +150,14 @@ console.log(losses.map(extractOpponent));
 //one for filtering for games with fumbles (this can be a named or an anonymous
 //callback like you used earlier).
 //Note that `fumbledAndLostFilter` _is_ a function!
-
+const fumbledAndLostFilter = makeCombinedFilter(huskiesLost, function(game) {
+  return game.fumbles >= 1;});
 
 //Create an array of games that UW lost with fumbles. Use the 
 //`fumbledAndLostFilter()` function as a callback to the `filter()` method.
 //Log out the array of games lost with fumbles.
-
+const lostWithFumbles = huskyGames2016.filter(fumbledAndLostFilter);
+console.log(lostWithFumbles);
 
 
 //OPTIONAL extra practice: create a variable `avgScoreDifference` that
